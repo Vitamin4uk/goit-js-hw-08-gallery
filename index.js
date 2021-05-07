@@ -64,3 +64,56 @@ function onEcsKeyClick(e) {
     onCloseBtnClick();
   }
 }
+
+function onLeftArrowKeyClick(e) {
+  const LEFT_ARROW_KEY_CODE = "ArrowLeft";
+  const isArrowLeft = e.code === LEFT_ARROW_KEY_CODE;
+  if (isArrowLeft) {
+    const currentIndex = findCurrentIndexOfImg();
+    const nextIndex = findNextIndexToTheLeft(currentIndex);
+    const { original, description } = galleryItems[nextIndex];
+    refs.originalImage.src = original;
+    refs.originalImage.alt = description;
+  }
+}
+
+function onRightArrowKeyClick(e) {
+  const RIGHT_ARROW_KEY_CODE = "ArrowRight";
+  const isArrowRight = e.code === RIGHT_ARROW_KEY_CODE;
+  if (isArrowRight) {
+    const currentIndex = findCurrentIndexOfImg();
+    const nextIndex = findNextIndexToTheRight(currentIndex);
+    const { original, description } = galleryItems[nextIndex];
+    refs.originalImage.src = original;
+    refs.originalImage.alt = description;
+  }
+}
+
+function findCurrentIndexOfImg() {
+  const currentImageUrl = refs.originalImage.src;
+  const currentImage = galleryItems.find(
+    ({ original }) => original === currentImageUrl
+  );
+  const currentIndex = galleryItems.indexOf(currentImage);
+  return currentIndex;
+}
+
+function findNextIndexToTheRight(index) {
+  let nextIndex;
+  if (index === galleryItems.length - 1) {
+    nextIndex = 0;
+  } else {
+    nextIndex = index + 1;
+  }
+  return nextIndex;
+}
+
+function findNextIndexToTheLeft(index) {
+  let nextIndex;
+  if (index === 0) {
+    nextIndex = galleryItems.length - 1;
+  } else {
+    nextIndex = index - 1;
+  }
+  return nextIndex;
+}
